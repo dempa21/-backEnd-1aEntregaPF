@@ -1,1 +1,32 @@
-[]
+[
+  {
+    "title": "remera",
+    "price": 12354,
+    "thumbnail": "https:asd131231",
+    "id": 1
+  },
+  {
+    "title": "campera",
+    "price": 12354,
+    "thumbnail": "https:asd131231",
+    "id": 2
+  },
+  {
+    "title": "zapatillas",
+    "price": 12354,
+    "thumbnail": "https:asd131231",
+    "id": 3
+  },
+  {
+    "title": "gorra",
+    "price": 12354,
+    "thumbnail": "https:asd131231",
+    "id": 4
+  },
+  {
+    "title": "mochila",
+    "price": 12354,
+    "thumbnail": "https:asd131231",
+    "id": 5
+  }
+]

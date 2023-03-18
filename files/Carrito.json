@@ -1,1 +1,70 @@
-[]
+[
+  {
+    "productos": [
+      {
+        "producto": 2,
+        "title": "campera",
+        "quantity": 4
+      },
+      {
+        "producto": 3,
+        "title": "zapatillas",
+        "quantity": 19
+      },
+      {
+        "producto": 4,
+        "quantity": 2
+      },
+      {
+        "producto": 5,
+        "quantity": 1
+      }
+    ],
+    "id": 1
+  },
+  {
+    "productos": [
+      {
+        "producto": 5,
+        "title": "mochila",
+        "quantity": 5
+      },
+      {
+        "producto": 1,
+        "title": "remera",
+        "quantity": 3
+      }
+    ],
+    "id": 2
+  },
+  {
+    "productos": [
+      {
+        "producto": 5,
+        "title": "mochila",
+        "quantity": 3
+      },
+      {
+        "producto": 1,
+        "title": "remera",
+        "quantity": 3
+      }
+    ],
+    "id": 3
+  },
+  {
+    "productos": [
+      {
+        "producto": 2,
+        "title": "campera",
+        "quantity": 3
+      },
+      {
+        "producto": 3,
+        "title": "zapatillas",
+        "quantity": 9
+      }
+    ],
+    "id": 4
+  }
+]
