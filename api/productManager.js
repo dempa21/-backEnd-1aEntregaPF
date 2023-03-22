@@ -42,24 +42,19 @@ class ProductManager {
     productos = await this.getAll();
   req.status = true;
   const product = req.body;
-if(req.body.id) { res.send({ error: "El id es autogenerado" })}
-if(!product.title) { res.send({ error: "El título del producto es obligatorio" })}
-if(!product.description) { res.send({ error: "La descripción del producto es obligatoria" })}
-if(!product.code) { res.send({ error: "El código del producto es obligatorio" })}
-if(!product.price) { res.send({ error: "El precio del producto es obligatorio" })}
-if(!product.status) { res.send({ error: "El status del producto es obligatorio" })}
-if(!product.category) { res.send({ error: "La categoría del producto es obligatoria" })}
-if(req.body.id) { res.send({ error: "El id es autogenerado" })}
-if(req.body.id) { res.send({ error: "El id es autogenerado" })}
+
+if(product.title && product.description && product.code && product.price && product.status && product.category && !req.body.id) {
   // si no hay productos genera un id = 1, sino es autoincrementable
   productos.some((e) => e.id === 1)
     ? (product.id = Math.max(...productos.map((o) => o.id)) + 1)
     : (product.id = 1);
   if (productos.some((e) => e.id === product.id)) {
-    return res.send({ error: "Producto con id duplicado" });
+    console.log("Producto con id duplicado");
+    return null;
   }
   if (productos.some((e) => e.code === product.code)) {
-    return res.send({ error: "El código no puede estar duplicado" });
+    console.log("El código no puede estar duplicado");
+    return null;
   }
     try {
       let newId;
@@ -72,6 +67,9 @@ if(req.body.id) { res.send({ error: "El id es autogenerado" })}
       return newObj.id;
     } catch (err) {
       console.log(`error: ${err}`);
+    }} else {
+      console.log("Los campos son obligatorios y el ID es autogenerado");
+        return null;
     }
   };
 
@@ -90,7 +88,10 @@ if(req.body.id) { res.send({ error: "El id es autogenerado" })}
     try {
   const productos = await this.getAll();
   const producto = productos.find((p) => p.id === id);
-  if (!producto) return res.send({ error: "Producto no encontrado" });
+  
+  if (!producto) { 
+  console.log("Producto no encontrado");
+  return null;}
   res.send(producto);} catch (err) {
     console.log(`error: ${err}`);
   }
@@ -106,15 +107,13 @@ if(req.body.id) { res.send({ error: "El id es autogenerado" })}
   const productIndex = productos.findIndex((p) => p.id == productId);
 
   if (productIndex === -1) {
-    return res
-      .status(404)
-      .send({ status: "Error", message: "Producto not found" });
+    console.log("Producto not found");
+        return null;
   }
 
   if (changes.id) {
-    return res
-      .status(400)
-      .send({ status: "Error", message: "Cannot update product id" });
+    console.log("Cannot update product id");
+        return null;
   }
 
   const product = productos[productIndex];
@@ -126,10 +125,8 @@ if(req.body.id) { res.send({ error: "El id es autogenerado" })}
 
   productos.splice(productIndex, 1, updatedProduct);
   await this.writeFile(productos);
-
-  return res
-    .status(200)
-    .send({ status: "OK", message: "Product succesfully updated" });
+  console.log("Product succesfully updated");
+  res.send(productos);
   };
 
   deleteById = async (req, res) => {
@@ -139,13 +136,14 @@ if(req.body.id) { res.send({ error: "El id es autogenerado" })}
   try {
   const productIndex = productos.findIndex((p) => p.id == productId);
 
-  if (productIndex === -1) return res.status(404).json({});
+  if (productIndex === -1) {return 
+  console.log("404");
+  return null;}
 
   productos.splice(productIndex, 1);
   this.writeFile(productos);
-  return res
-  .status(200)
-  .send({ status: "OK", message: "Product succesfully deleted" });
+  console.log("Product succesfully deleted");
+  res.send(productos);
 }
 
   catch (err) {

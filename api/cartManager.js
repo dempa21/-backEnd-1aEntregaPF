@@ -39,25 +39,29 @@ class CartManager {
   };
 
   addCart = async (req, res) => {
-    try {
+
   let carts = [];
   carts = await this.getAllCarts();
   const cart = req.body;
-  if (req.body.id) {
-    return res.send({ error: "El id es autogenerado" });
-  } else {
+  if (!req.body.id) {
+    try {
     carts.some((e) => e.id === 1)
       ? (cart.id = Math.max(...carts.map((o) => o.id)) + 1)
       : (cart.id = 1);
     if (carts.some((e) => e.id === cart.id)) {
-      return res.send({ error: "Carrito con id duplicado" });
+      console.log("Error: Carrito con id duplicado");
+    return null;
     }
     carts.push(cart);
     await this.writeFile(carts);
-    return res.send({ status: "Success" });
-  }} catch (err) {
+    return cart.id;
+  } catch (err) {
     console.log(`error: ${err}`);
   }
+  } else {
+    console.log("Error: El id es autogenerado");
+    return null;
+  } 
   };
 
   getById = async (id) => { 
@@ -81,9 +85,8 @@ class CartManager {
 
   const cartFound = carts.find((c) => c.id === cartId);
   if (cartFound === -1) {
-    return res
-      .status(404)
-      .send({ status: "Error", message: "Cart not found" });
+    console.log("Cart not found");
+    return null;
   }
   const productInCart = cartFound.productos.find((p) => p.producto == productId);
 
@@ -110,10 +113,8 @@ class CartManager {
 
   carts.splice(cartIndex, 1, updatedCart);
   await this.writeFile(carts);
-
-  return res
-    .status(200)
-    .send({ status: "OK", message: "Cart succesfully updated" });
+  console.log("Cart succesfully updated");
+    return updatedCart;
   } catch (err) {
     console.log(`error: ${err}`);
   }
